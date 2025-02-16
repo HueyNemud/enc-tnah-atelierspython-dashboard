@@ -1,0 +1,89 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    font-size: 2.5em;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Styles pour le dashboard  "dataset" */
+
+#sélecteur-titre {
+    width: 50%;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#conteneur-mirador {
+    margin: 20px auto;
+    width: 80%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+#table-corpus {
+    margin: 20px auto;
+    width: 80%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Styles pour le dashboard "illustrations" */
+
+#graphe-illustrations {
+    margin: 20px auto;
+    width: 80%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner .dash-cell {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner .dash-header {
+    background-color: #343a40;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner .dash-header .column-header-name {
+    padding: 10px;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner .dash-header .column-header-name:hover {
+    background-color: #495057;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner .dash-cell:hover {
+    background-color: #f1f3f5;
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner .dash-cell.selected {
+    background-color: #e9ecef;
+}
