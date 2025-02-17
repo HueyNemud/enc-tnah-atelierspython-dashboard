@@ -47,7 +47,7 @@ titres = data["titre"].unique()
 layout = html.Div(
     [
         # Titre de la page
-        html.H3("Les images dans la presse"),
+        html.H3("Les images dans la presse, une histoire en graphiques"),
         # Sélecteur de titre de presse
         dcc.Checklist(
             id="sélecteur-titre",

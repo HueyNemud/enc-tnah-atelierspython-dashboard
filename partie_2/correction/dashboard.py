@@ -25,7 +25,7 @@ app.layout = html.Div(
                 [
                     # Avec un titre général
                     dbc.NavbarBrand(
-                        "Données historiques de la presse française, XIX-XXe siècles",
+                        "Exploration des métadonnées  quantitatives de la  presse française, XIX-XXe siècles",
                         href="/",
                     ),
                     # Et des éléments de menu  qui pointent vers les différentes pages de l'application
@@ -39,8 +39,11 @@ app.layout = html.Div(
                             ),
                         ]
                     ),
-                ]
-            )
+                ],
+                fluid=True,  # La navbar prend toute la largeur de l'écran
+            ),
+            color="dark",  # La couleur de fond de la navbar
+            dark=True,  # Le texte est blanc
         ),
         html.Div(dash.page_container),
     ]

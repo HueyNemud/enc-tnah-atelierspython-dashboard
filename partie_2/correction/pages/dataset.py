@@ -17,7 +17,7 @@ titres = data["titre"].unique()
 
 layout = html.Div(
     [
-        html.H3("Vue générale"),
+        html.H3("Explorer la table de données complète"),
         dcc.Dropdown(
             id="sélecteur-titre",
             options=[{"label": cat, "value": cat} for cat in titres],
@@ -70,6 +70,10 @@ def update_mirador(idx_lignes_sélectionnées, table):
 
     # Une seule ligne peut être sélectionnée grace à row_selectable="single"
     ligne = idx_lignes_sélectionnées[0]
+
+    if ligne >= len(table):
+        return ""
+
     ark = table[ligne]["ark"]
 
     # On construit l'URL du manifeste IIIF
