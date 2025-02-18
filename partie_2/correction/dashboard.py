@@ -52,4 +52,4 @@ app.layout = html.Div(
 
 # Si ce fichier est exécuté directement avec `python dashboard.py`, alors on démarre le serveur
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run(debug=True)

@@ -1,6 +1,7 @@
+""" Code du dashboard `illustrations` qui affiche le graphique de l'évolution du nombre d'illustrations dans la presse.
+"""
+
 import dash
-from dash import dcc, html, callback
-from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
 
@@ -18,66 +19,42 @@ dash.register_page(__name__)
 # - groupby() placera "titre" et "date" en index. On préfère les avoir comme colonnes pour simplifier la manipulation,
 #       donc on appelle reset_index() pour réinitialiser l'index et remettre les colonnes "titre" et "date" comme colonnes normales.
 data = (
-    pd.read_csv("../presse_xix-xxe_meta_arks.csv", parse_dates=["date"])
+    pd.read_csv("../presse_xix-xxe.csv", parse_dates=["date"])
     .groupby(["titre", pd.Grouper(key="date", freq="YE")])
     .sum()
     .reset_index()
 )
 
-# On récupère les titres uniques pour les utiliser dans la checklist
-titres = data["titre"].unique()
 
-
-# Définition de la structure de la page
-# --------------------------------------------------------
-#
-#  TITRE H3 "Les images dans la presse"
-#
-#        ______Checklist "selecteur-titre"__ _________
-#           [  ]  Le Gaulois
-#           [  ] Le Matin
-#           [  ] ...
-#        ___________________________________________
-#
-#        ______Graph "graphe-illustrations"________
-#        |                        ICI  VA LE GRAPHIQUE !          |
-#        ___________________________________________
-
-# L'élément principal est conteneur DIV qui contiendra tous les autres éléments de la page
-layout = html.Div(
+layout = dash.html.Div(
     [
         # Titre de la page
-        html.H3("Les images dans la presse, une histoire en graphiques"),
+        dash.html.H3("Les images dans la presse, une histoire en graphiques"),
         # Sélecteur de titre de presse
-        dcc.Checklist(
-            id="sélecteur-titre",
-            options=[{"label": titre, "value": titre} for titre in titres],
+        dash.dcc.Checklist(
+            id="selecteur-titre",
+            options=data.titre.unique(),
             value=[],  # Aucun titre sélectionné par défaut
         ),
-        # Notre graphique !
-        dcc.Graph(id="graphe-illustrations"),
+        dash.dcc.Graph(id="graphe-illustrations"),
     ]
 )
 
 
-# --------------------------------------------------------
-# Définitions de la logique des interactions  entre les éléments de la page
-
-
-@callback(
-    Output("graphe-illustrations", "figure"),  # En sortie : on met à jour le graphique
-    [
-        Input("sélecteur-titre", "value")
-    ],  # En entrée : on écoute les changements de sélection dans la checklist
+# En sortie : on met à jour le graphique
+# En entrée : on écoute les changements de sélection dans la checklist
+@dash.callback(
+    dash.Output("graphe-illustrations", "figure"),
+    [dash.Input("selecteur-titre", "value")],
 )
-def update_graph(titres_sélectionnés):
-    """Met à jour le graphique en fonction des titres de presse sélectionnés"""
+def tracer_courbes(selection):
+    """Mets à jour le graphique en fonction des titres de presse sélectionnés"""
 
     fig = px.line()  # On crée un graphique vide qu'on remplira ensuite
 
     # On crée la courbe de l'évolution du nombre d'illustrations pour chaque titre sélectionné
     # Puis on ajoute chaque courbe au graphique
-    for titre in titres_sélectionnés:
+    for titre in selection:
         df = data[data["titre"] == titre]
         fig.add_scatter(
             x=df["date"],
@@ -98,15 +75,14 @@ def update_graph(titres_sélectionnés):
     return fig
 
 
-# --------------------------------------------------------
-# Si ce fichier est exécuté directement, on lance l'application Dash
-# Attention : dans ce cas il faut commenter la ligne dash.register_page(__name__)
 if __name__ == "__main__":
-    # On crée une application Dash
-    app = dash.Dash(__name__)
+    # 1. Instanciation
+    app = dash.Dash()
 
-    # On définit la structure de la page à afficher
+    # 2. Layout : assignation du layout déclaré plus haut
     app.layout = layout
 
-    # On lance l'application en mode debug
-    app.run_server(debug=True)
+    # print(app.layout.to_plotly_json()) # Debug  à dé-commenter au besoin : affiche le layout en JSON
+
+    # 3. Lancement du serveur
+    app.run(debug=True)
